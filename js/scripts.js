@@ -31,13 +31,14 @@ AddressBook.prototype.deleteContact = function(id) {
 
 // Business Logic for Contacts ---------
 
-function Contact(firstName, lastName, phoneNumber, emailAddress, mailingAddress) {
+
+function Contact(firstName, lastName, phoneNumber, multiAddress) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
-  this.emailAddress = emailAddress;
-  this.mailingAddress = mailingAddress;
+  this.multiAddress = multiAddress;
 }
+
 
 Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
@@ -73,8 +74,8 @@ function showContact(contactId) {
   $(".first-name").html(contact.firstName);
   $(".last-name").html(contact.lastName);
   $(".phone-number").html(contact.phoneNumber);
-  $(".email-address").html(contact.emailAddress);
-  $(".mailing-address").html(contact.mailingAddress);
+  $("#email-address").html(contact.multiAddress);
+  $("#mailing-address").html(contact.multiAddress);
   let buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" + + contact.id + ">Delete</button>");
@@ -87,26 +88,34 @@ $(document).ready(function() {
     const inputtedFirstName = $("input#new-first-name").val();
     const inputtedLastName = $("input#new-last-name").val();
     const inputtedPhoneNumber = $("input#new-phone-number").val();
-    const inputtedEmailAddress = $("input#new-email-address").val();
-    const inputtedMailingAddress = $("input#new-mailing-address").val();
-
+    let inputtedEmailAddress = $("input#new-email-address").val();
+    let inputtedMailingAddress = $("input#new-mailing-address").val();
+    let multiAddress = {email: inputtedEmailAddress, mailing: inputtedMailingAddress}
+    
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
     $("input#new-email-address").val("");
     $("input#new-mailing-address").val("");
     
-    let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmailAddress, inputtedMailingAddress);
+    let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, multiAddress);
     addressBook.addContact(newContact);
     displayContactDetails(addressBook);
   });
 });
 
-// // Practice ---------
-// function Contact(firstName, lastName, phoneNumber, email, mailingAddress) {
-//   this.firstName = firstName;
-//   this.lastName = lastName;
-//   this.phoneNumber = phoneNumber;
-//   this.email= email;
-//   this.mailingAddress= { address: ["Home", "Work", "PO Box"] }
-// }
+// Practice ---------
+
+// function Contact(firstName, lastName, phoneNumber, emailAddress, mailingAddress) {
+//     this.firstName = firstName;
+//     this.lastName = lastName;
+//     this.phoneNumber = phoneNumber;
+//     this.emailAddress = emailAddress;
+//     this.mailingAddress = mailingAddress;
+//   }
+
+// let emailAddress = { personal: " ", work: " " };
+// let mailingAddress = { personal: " ", work: " " };
+
+// let multipleAddress = { name: "Business and Personal", information: [emailAddress, mailingAddress] };
+// let multipleAddress = { email: "ryan@ryan.com", mailing: 111 n }
